@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <p>{{full}}</p>
+        <div>{{msg}}</div>
+    </div>
+</body>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            first: '你',
+            last: '好',
+            msg: 'hello world',
+            full: ''
+        },
+        // computed: {
+        //     full() {
+        //         console.log('计算一次')
+        //         return this.first + this.last
+        //     }
+        // },
+        watch: {
+            first(){ //监听data中 first 属性 ,当值改变时,执行函数
+                console.log('计算一次')
+                this.full = this.first + this.last
+            },
+            msg() {
+                console.log('计算一次')
+                this.full = this.first + this.last + 1
+            }
+        },
+        methods: {
+            show() {
+                setTimeout(() => {
+                    this.msg = '我要改变了'
+                    // this.first = '我'
+                    // this.last = '她'
+                }, 2000);
+            }
+        },
+        mounted() {
+            this.show()
+        }
+    })
+</script>
+
+</html>

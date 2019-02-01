@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+
+    </div>
+</body>
+<script>
+    let vm = new Vue({
+        el: "#app",
+        template: "<p>{{msg}}</p>",
+        data: {
+            msg: "hello world",
+            info: '我需要改变'
+        },
+        methods: {
+
+        },
+        beforeCreate(){  //此时data和methods中的数据都还么有初始化
+            console.log('beforeCreate')
+        },
+        created() {  //此时data和methods都已经被初始化好了
+            console.log('created');
+            console.log(this.$el)
+        },
+        beforeMount() {  //此时, 模板已经在内存中编译好了, 但是尚未挂载到页面中去.页面还是旧的
+            console.log('beforeMount')
+            console.log(this.$el)
+        },
+        mounted() { //表示整个Vue实例已经初始化完毕, 内存中编译好的模板真实替换到页面中去
+                    // 可以操作DOM节点了
+            console.log('mounted')
+            this.msg = this.info    // 改变date数据, 触发下面两个钩子函数
+        },
+
+        //这两个组件是运行阶段的, 会根据data中数据的改变, 有选择的触发 0次 到 多次
+        beforeUpdate() { // 此时, 页面中显示的数据是旧的, 但data中的数据已更新,
+            console.log('beforeUpdate')
+        },
+        updated() { // 此时, 根据data中的最新数据, 在内存中,重新渲染出一份最新的内存DOM树
+                    // 然后把 最新的内存DOM树重新渲染到真实页面中
+            console.log('updated')
+        },
+
+
+        beforeDestroy() { //此时, Vue实例从运行阶段进入到销毁阶段, data和methods等都处于可用状态
+             console.log('beforeDestroy')
+        },
+        destroyed() {  //此时, 组件已经被完全销毁, 所有东西都不可用
+            console.log('destroyed')
+        },
+    })
+</script>
+
+</html>

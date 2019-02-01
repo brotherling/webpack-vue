@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script src="./vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <button @click="addData">增加对象数据</button>
+        <h3>往对象里增加方法</h3>
+        <ul>
+            <li v-for="(val, key, index) of obj" :key="key">
+                值: {{val}}------key: {{key}}-------索引: {{index}}
+            </li>
+        </ul>
+
+        <button @click="addInfo">增加数组数据</button>
+        <h3>往数组里增加方法</h3>
+        <ul>
+            <li v-for="(item, index) of list" :key="key">
+                {{item}}
+            </li>
+        </ul>
+    </div>
+</body>
+    <script>
+        let vm = new Vue({
+            el: "#app",
+            data: {
+                obj: {
+                    title: 'hello world',
+                    name: 'zhangsan',
+                    age: 17,
+                    sex: '男'
+                },
+                list: [1,2,3,4]
+            },
+            methods:{
+                // set 方法有三个参数. 第一个是目标,第二个参数是索引或key,第三个是val值 
+                addData(){
+                    Vue.set(this.obj, 'skin'+Math.random(), 'red')
+                },
+                addInfo(){
+                    vm.$set(vm.list, 0, 'helloworld')
+                    // this.$set(this.list, 0, 'helloworld')
+                }
+            }
+        })
+    </script>
+</html>
